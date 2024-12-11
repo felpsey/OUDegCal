@@ -1,11 +1,14 @@
-// Dependencies
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from "tailwindcss";
+import autoprefixer from 'autoprefixer';
 
-// Plugins
-import vue from '@vitejs/plugin-vue'
-
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-  base: "/ou-deg-est/"
-})
+  plugins: [react()],
+  css: {
+    postcss: {
+      plugins: [tailwindcss(), autoprefixer()],
+    },
+  },
+});
