@@ -7,17 +7,19 @@ import { PlusIcon } from '@heroicons/react/24/solid';
 
 import NewModuleModal from './components/NewModuleModal';
 import ModuleTable from './components/ModuleTable';
+import { Module } from './domain/Module';
 
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const modules = [
-    { module: 'TM101', credits: 30, grade: '1' }
-  ]
+  const [modules, setModules] = useState<Module[]>([]);
 
   function newModuleEntry() {
-    setIsModalOpen(true)
+    setIsModalOpen(true);
+  }
+
+  function addModuleData(module: Module) {
+    setModules([...modules, module]);
   }
 
   return (
@@ -39,10 +41,10 @@ function App() {
       </div>
 
       <div className='container mt-4 p-2'>
-        <ModuleTable data={modules} />
+        <ModuleTable modules={modules} />
       </div>
 
-      <NewModuleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <NewModuleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onModuleAdd={addModuleData} />
     </div>
   )
 }
