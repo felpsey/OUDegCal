@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 
@@ -11,15 +11,64 @@ import { Module } from './domain/Module';
 
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modules, setModules] = useState<Module[]>([]);
 
-  function newModuleEntry() {
+  // Decode search params when the component is mounted
+  useEffect(() => {
+    decodeSearchParams();
+  }, []);
+
+  // Update encoded search params when modules state is changed
+  useEffect(() => {
+    if (modules.length !== 0) {
+      updateSearchParams();
+    }
+  }, [modules]);
+
+  function decodeSearchParams(): void {
+    let currentUrl: URL = new URL(document.location.href);
+    let data: string|null = currentUrl.searchParams.get('data');
+
+    if (data) {
+      importUnstructuredModuleData(JSON.parse(atob(data)));
+    }
+  }
+
+  function importUnstructuredModuleData(unstructuredModuleData: []): void {
+    let structuredModuleData = unstructuredModuleData.map((module: any) => {
+      return new Module(module._code, module._credits, module._stage, module._grade);
+    });
+
+    setModules(structuredModuleData);
+  }
+
+  function encodeModuleData(): string {
+    // Convert modules array to JSON then base64 encode
+    return btoa(JSON.stringify(modules));
+  }
+
+  function newModuleEntry(): void {
     setIsModalOpen(true);
   }
 
-  function addModuleData(module: Module) {
+  function addModuleData(module: Module): void {
+    // Copy contents of existing modules array and append new module object
     setModules([...modules, module]);
+  }
+
+  function updateSearchParams(): void {
+    // Encode module data in memory
+    let data = encodeModuleData();
+
+    // Fetch the currentl URL, this will change each time this method is called
+    let currentUrl = new URL(document.location.href);
+
+    // Set encoded data on URL object on 'data' property
+    currentUrl.searchParams.set('data', data);
+    
+    // Append encoded params to URI without reloading page
+    history.replaceState({}, "", currentUrl.toString());
   }
 
   return (

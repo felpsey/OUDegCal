@@ -6,10 +6,10 @@ export class Module {
     private _weightedGrade: number;
 
     constructor(code: string, credits: number, stage: number, grade: number) {
-        this.code = code;
-        this.credits = credits;
-        this.stage = stage;
-        this.grade = grade;
+        this._code = code;
+        this._credits = credits;
+        this._stage = stage;
+        this._grade = grade;
         this._weightedGrade = this.calculateWeightedGrade();
     }
 
@@ -53,6 +53,6 @@ export class Module {
     }
 
     calculateWeightedGrade(): number {
-        return this._weightedGrade = this.stage * this.grade;
+        return this._weightedGrade = (this.credits * (this.stage - 1)) * this.grade;
     }
 }

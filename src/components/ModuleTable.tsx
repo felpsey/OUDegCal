@@ -12,7 +12,9 @@ export default function Table({ modules }: TableProps) {
           <tr>
             <th className="border border-gray-200 px-4 py-2">Module</th>
             <th className="border border-gray-200 px-4 py-2">Credits</th>
+            <th className="border border-gray-200 px-4 py-2">Stage</th>
             <th className="border border-gray-200 px-4 py-2">Grade</th>
+            <th className="border border-gray-200 px-4 py-2">Weighted Grade</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +25,9 @@ export default function Table({ modules }: TableProps) {
             >
               <td className="border border-gray-200 px-4 py-2">{item.code}</td>
               <td className="border border-gray-200 px-4 py-2">{item.credits}</td>
+              <td className="border border-gray-200 px-4 py-2">{item.stage}</td>
               <td className="border border-gray-200 px-4 py-2">{item.grade}</td>
+              <td className="border border-gray-200 px-4 py-2">{item.weightedGrade}</td>
             </tr>
           ))}
         </tbody>
