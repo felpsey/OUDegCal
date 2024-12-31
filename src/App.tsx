@@ -7,12 +7,15 @@ import { PlusIcon } from '@heroicons/react/24/solid';
 
 import NewModuleModal from './components/NewModuleModal';
 import ModuleTable from './components/ModuleTable';
+import ProgrammeResultCard from './components/ProgrammeResultCard';
 import { Module } from './domain/Module';
+import { Programme } from './domain/Programme';
 
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modules, setModules] = useState<Module[]>([]);
+  const [programme, setProgramme] = useState<Programme>(new Programme("Example programme", modules));
 
   // Decode search params when the component is mounted
   useEffect(() => {
@@ -21,8 +24,8 @@ function App() {
 
   // Update encoded search params when modules state is changed
   useEffect(() => {
-    if (modules.length !== 0) {
-      updateSearchParams();
+    if (programme.modules.length !== 0) {
+      updateSearchParams()
     }
   }, [modules]);
 
@@ -49,6 +52,7 @@ function App() {
   }
 
   function newModuleEntry(): void {
+    console.log(programme)
     setIsModalOpen(true);
   }
 
@@ -91,6 +95,10 @@ function App() {
 
       <div className='container mt-4 p-2'>
         <ModuleTable modules={modules} />
+      </div>
+
+      <div className='container mt-4 p-2'>
+        <ProgrammeResultCard programme={programme} />
       </div>
 
       <NewModuleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onModuleAdd={addModuleData} />
