@@ -38,13 +38,13 @@ function App() {
     }
   }
 
-  function importUnstructuredModuleData(unstructuredModuleData: []): void {
-    let structuredModuleData = unstructuredModuleData.map((module: any) => {
-      return new Module(module._code, module._credits, module._stage, module._grade);
-    });
+  // function importUnstructuredModuleData(unstructuredModuleData: []): void {
+  //   let structuredModuleData = unstructuredModuleData.map((module: any) => {
+  //     return new Module(module._code, module._credits, module._stage, module._grade);
+  //   });
 
-    setProgramme(programme.modules.structuredModuleData);
-  }
+  //   setProgramme(programme.modules.structuredModuleData);
+  // }
 
   function encodeModuleData(): string {
     // Convert modules array to JSON then base64 encode
@@ -61,25 +61,25 @@ function App() {
         const updatedModules = [...currentProgramme.modules, module];
 
         // Return a new Programme instance with updated modules
-        return new Programme(currentProgramme.name, updatedModules);
+        return new Programme(currentProgramme.title, updatedModules);
     });
 
     console.log(programme);
 }
 
-  function updateSearchParams(): void {
-    // Encode module data in memory
-    let data = encodeModuleData();
+  // function updateSearchParams(): void {
+  //   // Encode module data in memory
+  //   let data = encodeModuleData();
 
-    // Fetch the currentl URL, this will change each time this method is called
-    let currentUrl = new URL(document.location.href);
+  //   // Fetch the currentl URL, this will change each time this method is called
+  //   let currentUrl = new URL(document.location.href);
 
-    // Set encoded data on URL object on 'data' property
-    currentUrl.searchParams.set('data', data);
+  //   // Set encoded data on URL object on 'data' property
+  //   currentUrl.searchParams.set('data', data);
     
-    // Append encoded params to URI without reloading page
-    history.replaceState({}, "", currentUrl.toString());
-  }
+  //   // Append encoded params to URI without reloading page
+  //   history.replaceState({}, "", currentUrl.toString());
+  // }
 
   return (
     <div className='container mx-auto h-screen border-l border-r border-gray-100'>

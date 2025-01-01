@@ -69,7 +69,7 @@ export class Programme {
 
     calculateFinalGrade(): string {
         switch (true) {
-            case this._totalCredits <359:
+            case this._totalCredits <240:
                 this._finalGrade = "Not Enough Credits"
                 break;
             case this._totalWeightedGrade >= 360 && this._totalWeightedGrade <= 630:
