@@ -29,14 +29,14 @@ function App() {
     }
   }, [programme]);
 
-  function decodeSearchParams(): void {
-    let currentUrl: URL = new URL(document.location.href);
-    let data: string|null = currentUrl.searchParams.get('data');
+  // function decodeSearchParams(): void {
+  //   let currentUrl: URL = new URL(document.location.href);
+  //   let data: string|null = currentUrl.searchParams.get('data');
 
-    if (data) {
-      importUnstructuredModuleData(JSON.parse(atob(data)));
-    }
-  }
+  //   if (data) {
+  //     importUnstructuredModuleData(JSON.parse(atob(data)));
+  //   }
+  // }
 
   // function importUnstructuredModuleData(unstructuredModuleData: []): void {
   //   let structuredModuleData = unstructuredModuleData.map((module: any) => {
@@ -46,14 +46,14 @@ function App() {
   //   setProgramme(programme.modules.structuredModuleData);
   // }
 
-  function encodeModuleData(): string {
-    // Convert modules array to JSON then base64 encode
-    return btoa(JSON.stringify(programme));
-  }
+  // function encodeModuleData(): string {
+  //   // Convert modules array to JSON then base64 encode
+  //   return btoa(JSON.stringify(programme));
+  // }
 
-  function newModuleEntry(): void {
-    setIsModalOpen(true);
-  }
+  // function newModuleEntry(): void {
+  //   setIsModalOpen(true);
+  // }
 
   function addModuleData(module: Module): void {
     setProgramme((currentProgramme) => {
