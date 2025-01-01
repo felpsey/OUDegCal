@@ -19,7 +19,7 @@ function App() {
 
   // Decode search params when the component is mounted
   useEffect(() => {
-    decodeSearchParams();
+    // decodeSearchParams();
   }, []);
 
   // Update encoded search params when modules state is changed
@@ -51,9 +51,9 @@ function App() {
   //   return btoa(JSON.stringify(programme));
   // }
 
-  // function newModuleEntry(): void {
-  //   setIsModalOpen(true);
-  // }
+  function newModuleEntry(): void {
+    setIsModalOpen(true);
+  }
 
   function addModuleData(module: Module): void {
     setProgramme((currentProgramme) => {
