@@ -8,14 +8,14 @@ import { PlusIcon } from '@heroicons/react/24/solid';
 import NewModuleModal from './components/NewModuleModal';
 import ModuleTable from './components/ModuleTable';
 import ProgrammeResultCard from './components/ProgrammeResultCard';
+
 import { Module } from './domain/Module';
 import { Programme } from './domain/Programme';
 
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modules, setModules] = useState<Module[]>([]);
-  const [programme, setProgramme] = useState<Programme>(new Programme("Example programme", modules));
+  const [programme, setProgramme] = useState<Programme>(new Programme("Example programme"));
 
   // Decode search params when the component is mounted
   useEffect(() => {
@@ -25,9 +25,9 @@ function App() {
   // Update encoded search params when modules state is changed
   useEffect(() => {
     if (programme.modules.length !== 0) {
-      updateSearchParams()
+      // updateSearchParams()
     }
-  }, [modules]);
+  }, [programme]);
 
   function decodeSearchParams(): void {
     let currentUrl: URL = new URL(document.location.href);
@@ -43,23 +43,29 @@ function App() {
       return new Module(module._code, module._credits, module._stage, module._grade);
     });
 
-    setModules(structuredModuleData);
+    setProgramme(programme.modules.structuredModuleData);
   }
 
   function encodeModuleData(): string {
     // Convert modules array to JSON then base64 encode
-    return btoa(JSON.stringify(modules));
+    return btoa(JSON.stringify(programme));
   }
 
   function newModuleEntry(): void {
-    console.log(programme)
     setIsModalOpen(true);
   }
 
   function addModuleData(module: Module): void {
-    // Copy contents of existing modules array and append new module object
-    setModules([...modules, module]);
-  }
+    setProgramme((currentProgramme) => {
+        // Create a new array with the added module
+        const updatedModules = [...currentProgramme.modules, module];
+
+        // Return a new Programme instance with updated modules
+        return new Programme(currentProgramme.name, updatedModules);
+    });
+
+    console.log(programme);
+}
 
   function updateSearchParams(): void {
     // Encode module data in memory
@@ -94,7 +100,7 @@ function App() {
       </div>
 
       <div className='container mt-4 p-2'>
-        <ModuleTable modules={modules} />
+        <ModuleTable modules={programme.modules} />
       </div>
 
       <div className='container mt-4 p-2'>

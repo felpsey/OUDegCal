@@ -1,50 +1,28 @@
-# React + TypeScript + Vite
+# OU Degree Estimator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project aims to automate the calculation of the grade of degree programmes issued by the (Open University)[https://open.ac.uk].
 
-Currently, two official plugins are available:
+## Usage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Hosted
 
-## Expanding the ESLint configuration
+The application is accessible on GitHub pages at https://felpsey.github.io/ou-degree-estimator
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Local
 
-- Configure the top-level `parserOptions` property like this:
+#### Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- Node v20.16.0
+- Modern Web Browser
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+#### Guide
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone this repository
+2. Run `npm install && npm run dev`
+3. Open http://localhost:5173/ou-degree-estimator in a web browser
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+# Disclaimer
+
+This project provides estimations only, and does not account for academic discretion by the University. Additionally, this project is not affiliated with the Open University in any capacity.
+
+The algorithms used to compute estimated grades apply the logic and criteria outlined in the "Understanding your Class of Honours Guidance Document: Undergraduate Bachelor's Degrees" policy (Open University, 2023), available (here)[https://help.open.ac.uk/documents/policies/working-out-your-class-of-honours/files/252/Understanding%20your%20Class%20of%20Honours%20Bachelors%20May%2023.pdf].
