@@ -40,8 +40,6 @@ export class Programme {
     get totalCredits() {
         this._totalCredits = this.calculateTotalCredits();
 
-        console.log(this._totalCredits);
-
         return this._totalCredits;
     }
 

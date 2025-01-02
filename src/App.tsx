@@ -17,39 +17,37 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [programme, setProgramme] = useState<Programme>(new Programme("Example programme"));
 
-  // Decode search params when the component is mounted
   useEffect(() => {
-    // decodeSearchParams();
-  }, []);
+    if(!programme.modules.current && (programme.modules.length != 0)) {
+      let encodedModuleData = encodeModuleData(programme.modules);
 
-  // Update encoded search params when modules state is changed
-  useEffect(() => {
-    if (programme.modules.length !== 0) {
-      // updateSearchParams()
+      updateSearchParams(encodedModuleData);
     }
-  }, [programme]);
+  }), [programme];
 
-  // function decodeSearchParams(): void {
-  //   let currentUrl: URL = new URL(document.location.href);
-  //   let data: string|null = currentUrl.searchParams.get('data');
+  function decodeSearchParams(): void {
+    let currentUrl: URL = new URL(document.location.href);
+    let data: string|null = currentUrl.searchParams.get('data');
 
-  //   if (data) {
-  //     importUnstructuredModuleData(JSON.parse(atob(data)));
-  //   }
-  // }
+    if (data) {
+      importModuleData(JSON.parse(atob(data)));
+    }
+  }
 
-  // function importUnstructuredModuleData(unstructuredModuleData: []): void {
-  //   let structuredModuleData = unstructuredModuleData.map((module: any) => {
-  //     return new Module(module._code, module._credits, module._stage, module._grade);
-  //   });
+  function importModuleData(unstructuredModuleData: []): void {
+    let modules = unstructuredModuleData.map((module: any) => {
+      return new Module(module._code, module._credits, module._stage, module._grade);
+    });
 
-  //   setProgramme(programme.modules.structuredModuleData);
-  // }
+    modules.forEach(module => {
+      addModuleData(module)
+    });
+  }
 
-  // function encodeModuleData(): string {
-  //   // Convert modules array to JSON then base64 encode
-  //   return btoa(JSON.stringify(programme));
-  // }
+  function encodeModuleData(modules): string {
+    // Convert modules array to JSON then base64 encode
+    return btoa(JSON.stringify(modules));
+  }
 
   function newModuleEntry(): void {
     setIsModalOpen(true);
@@ -63,23 +61,20 @@ function App() {
         // Return a new Programme instance with updated modules
         return new Programme(currentProgramme.title, updatedModules);
     });
+  }
 
-    console.log(programme);
-}
+  function updateSearchParams(data): void {
+    // Fetch the currentl URL, this will change each time this method is called
+    let currentUrl = new URL(document.location.href);
 
-  // function updateSearchParams(): void {
-  //   // Encode module data in memory
-  //   let data = encodeModuleData();
-
-  //   // Fetch the currentl URL, this will change each time this method is called
-  //   let currentUrl = new URL(document.location.href);
-
-  //   // Set encoded data on URL object on 'data' property
-  //   currentUrl.searchParams.set('data', data);
+    // Set encoded data on URL object on 'data' property
+    currentUrl.searchParams.set('data', data);
     
-  //   // Append encoded params to URI without reloading page
-  //   history.replaceState({}, "", currentUrl.toString());
-  // }
+    // Append encoded params to URI without reloading page
+    history.replaceState({}, "", currentUrl.toString());
+  }
+
+  decodeSearchParams();
 
   return (
     <div className='container mx-auto h-screen border-l border-r border-gray-100'>
