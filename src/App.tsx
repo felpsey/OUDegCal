@@ -2,85 +2,84 @@ import { useEffect, useState } from 'react'
 
 import './App.css'
 
+import { Module } from './domain/Module';
+import { Programme } from './domain/Programme';
+
 import { PlusIcon } from '@heroicons/react/24/solid';
-// import { ShareIcon } from '@heroicons/react/24/solid';
 
 import NewModuleModal from './components/NewModuleModal';
 import ModuleTable from './components/ModuleTable';
 import ProgrammeResultCard from './components/ProgrammeResultCard';
 
-import { Module } from './domain/Module';
-import { Programme } from './domain/Programme';
-
-
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [programme, setProgramme] = useState<Programme>(new Programme("Example programme"));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [programme, setProgramme] = useState<Programme>(new Programme("My Degree"));
 
+  // Decode URI data on App load
   useEffect(() => {
-    if(!programme.modules.current && (programme.modules.length != 0)) {
-      let encodedModuleData = encodeModuleData(programme.modules);
+    decodeSearchParams();
+  }, []);
 
-      updateSearchParams(encodedModuleData);
+  // Update URI when modules change
+  useEffect(() => {
+    if (programme.modules.length > 0) {
+      updateSearchParams(encodeModuleData(programme.modules));
     }
-  }), [programme];
+  }, [programme.modules]);
 
+  /** Decode data from URI */
   function decodeSearchParams(): void {
-    let currentUrl: URL = new URL(document.location.href);
-    let data: string|null = currentUrl.searchParams.get('data');
+    const currentUrl = new URL(document.location.href);
+    const data = currentUrl.searchParams.get('data');
 
     if (data) {
       importModuleData(JSON.parse(atob(data)));
     }
   }
 
-  function importModuleData(unstructuredModuleData: []): void {
-    let modules = unstructuredModuleData.map((module: any) => {
-      return new Module(module._code, module._credits, module._stage, module._grade);
-    });
+  /** Import decoded module data into the state */
+  function importModuleData(unstructuredModuleData: any[]): void {
+    const modules = unstructuredModuleData.map((module: any) => 
+      new Module(module._code, module._credits, module._stage, module._grade)
+    );
 
-    modules.forEach(module => {
-      addModuleData(module)
-    });
+    setProgramme((currentProgramme) => new Programme(currentProgramme.title, modules));
   }
 
-  function encodeModuleData(modules): string {
-    // Convert modules array to JSON then base64 encode
+  /** Encode module data into base64 */
+  function encodeModuleData(modules: Module[]): string {
     return btoa(JSON.stringify(modules));
   }
 
+  /** Open modal for new module entry */
   function newModuleEntry(): void {
     setIsModalOpen(true);
   }
 
+  /** Add a new module */
   function addModuleData(module: Module): void {
-    setProgramme((currentProgramme) => {
-        // Create a new array with the added module
-        const updatedModules = [...currentProgramme.modules, module];
-
-        // Return a new Programme instance with updated modules
-        return new Programme(currentProgramme.title, updatedModules);
-    });
+    setProgramme((currentProgramme) => 
+      new Programme(currentProgramme.title, [...currentProgramme.modules, module])
+    );
   }
 
-  function updateSearchParams(data): void {
-    // Fetch the currentl URL, this will change each time this method is called
-    let currentUrl = new URL(document.location.href);
+  /** Update search parameters in the URL */
+  function updateSearchParams(data: string): void {
+    // Get current URL from browser API
+    const currentUrl = new URL(document.location.href);
 
-    // Set encoded data on URL object on 'data' property
+    // Set encoded data as 'data'
     currentUrl.searchParams.set('data', data);
-    
-    // Append encoded params to URI without reloading page
+
+    // Replace current URL without reloading the page
     history.replaceState({}, "", currentUrl.toString());
   }
-
-  decodeSearchParams();
 
   return (
     <div className='container mx-auto h-screen border-l border-r border-gray-100'>
       <div className='flex pt-5 pb-5 border-b border-gray-100'>
         <div className='flex-none w-auto pl-5 font-bold'>
-          OU Degree Estimator
+          <a href="https://github.com/felpsey/ou-degree-estimator">OU Degree Estimator</a>
         </div>
 
         <div className='grow'>

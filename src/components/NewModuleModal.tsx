@@ -22,9 +22,9 @@ function NewModuleModal({isOpen, onClose, onModuleAdd}: NewModuleModalProps) {
 
     return (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg w-1/3">
+        <div className="bg-white rounded-lg w-full h-full md:min-w-96 md:w-1/4 md:h-auto">
           <div className="flex justify-between items-center p-4 border-b">
-            <h2 className="text-lg font-bold">New Module Entry</h2>
+            <h2 className="text-lg font-bold">Add Module</h2>
             <button onClick={onClose} className="text-gray-500 hover:text-gray-800">
               <XMarkIcon className="h-6 w-6" />
             </button>
@@ -56,7 +56,7 @@ function NewModuleModal({isOpen, onClose, onModuleAdd}: NewModuleModalProps) {
             <p className="text-gray-600">Grade</p>
             <select value={grade} onChange={e => setGrade(parseInt(e.target.value))}>
               <option value={1}>Distinction</option>
-              <option value={2}>Merit</option>
+              <option value={2}>Grade 2 Pass</option>
               <option value={3}>Grade 3 Pass</option>
               <option value={4}>Grade 4 Pass</option>
             </select>
