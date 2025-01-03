@@ -1,3 +1,5 @@
+[![Main](https://github.com/felpsey/ou-degree-estimator/actions/workflows/deploy.yml/badge.svg)](https://github.com/felpsey/ou-degree-estimator/actions/workflows/deploy.yml)
+
 # OU Degree Estimator
 
 This project aims to automate the calculation of the grade of degree programmes issued by the (Open University)[https://open.ac.uk].
