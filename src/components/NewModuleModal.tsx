@@ -39,7 +39,7 @@ function NewModuleModal({isOpen, onClose, onModuleAdd}: NewModuleModalProps) {
               className="mt-3 w-full p-2 border rounded"
             />
 
-            <p className="text-gray-600">Credits</p>
+            <p className="text-gray-600 mt-4">Credits</p>
             <input
               type="text"
               value={credits}
@@ -47,14 +47,14 @@ function NewModuleModal({isOpen, onClose, onModuleAdd}: NewModuleModalProps) {
               className="mt-3 w-full p-2 border rounded"
             />
 
-            <p className="text-gray-600">Stage</p>
-            <select value={stage} onChange={e => setStage(parseInt(e.target.value))}>
+            <p className="text-gray-600 mt-4">Stage</p>
+            <select className='w-20 h-9 bg-transparent border-gray-200 border rounded p-1 pl-2 pr-2 mt-2' value={stage} onChange={e => setStage(parseInt(e.target.value))}>
               <option value={2}>2</option>
               <option value={3}>3</option>
             </select>
 
-            <p className="text-gray-600">Grade</p>
-            <select value={grade} onChange={e => setGrade(parseInt(e.target.value))}>
+            <p className="text-gray-600 mt-4">Grade</p>
+            <select className='w-40 h-9 bg-transparent border-gray-200 border rounded p-1 pl-2 pr-2 mt-2' value={grade} onChange={e => setGrade(parseInt(e.target.value))}>
               <option value={1}>Distinction</option>
               <option value={2}>Grade 2 Pass</option>
               <option value={3}>Grade 3 Pass</option>
