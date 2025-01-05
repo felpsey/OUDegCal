@@ -1,4 +1,7 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class Module {
+    private _id: string = '';
     private _code: string = "AB123";
     private _credits: number = 0;
     private _stage: number = 0;
@@ -6,11 +9,16 @@ export class Module {
     private _weightedGrade: number;
 
     constructor(code: string, credits: number, stage: number, grade: number) {
+        this._id = uuidv4();
         this._code = code;
         this._credits = credits;
         this._stage = stage;
         this._grade = grade;
         this._weightedGrade = this.calculateWeightedGrade();
+    }
+
+    get id(): string {
+        return this._id;
     }
 
     get code(): string {

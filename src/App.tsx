@@ -63,6 +63,17 @@ function App() {
     );
   }
 
+  /** Edit an existing module */
+  function editModuleData(updatedModule: Module): void {
+    setProgramme((currentProgramme) => {
+      const updatedModules = currentProgramme.modules.map((module) => 
+        module.id === updatedModule.id ? updatedModule : module
+      );
+
+      return new Programme(currentProgramme.title, updatedModules);
+    });
+  }
+
   /** Update search parameters in the URL */
   function updateSearchParams(data: string): void {
     // Get current URL from browser API
